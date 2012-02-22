@@ -7,8 +7,8 @@ var bot = new Bot(AUTH, USERID, ROOMID);
 
 bot.on('speak', function (data) {
    // Respond to "/hello" command
-   console.log(data);
-   if (data.text.match("WHO DO YOU FAP FOR?")) {
+   console.log(data.name + ": " + data.text);
+   /*if (data.text.match("WHO DO YOU FAP FOR?")) {
        
       bot.speak('I FAP FOR YOU ' + data.name + '!!!');
    }
@@ -23,13 +23,17 @@ bot.on('speak', function (data) {
    if (data.text.match("face down")) {
  
       bot.speak("ass up!");
-   }
+   }*/
+   /*if (data.text.match("Strngr_Lzr") || data.text.match("strngr_lzr") || data.text.match("strngr")) {
+  
+      bot.speak("Strngr is getting lunch real fast, please don't boot him");
+   }*/
    var options = {
        host: 'songtracker.vladimirkozyrev.com',
        path: '/catFact/',
        method: 'GET',
    };
-   if (data.text.match("/catfact")) {
+   if (data.text.match("catfact")) {
       
       var req = http.request(options, function(res) {
 	      //console.log('STATUS: ' + res.statusCode);
