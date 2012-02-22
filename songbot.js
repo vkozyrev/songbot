@@ -44,3 +44,5 @@ bot.on('speak', function (data) {
       req.end();
    }
 });
+var stdin = process.openStdin();
+stdin.on('data', function (chunk) { bot.speak(chunk); });
