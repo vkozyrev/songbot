@@ -16,6 +16,10 @@ bot.on('speak', function (data) {
    
       bot.speak("VAT THA FAHK");
    }
+   if (data.userid == '4e16773ba3f751697809e7dc'  && data.text.match("sup guys")) {
+
+      bot.speak("ALL HAIL! YOUR KING STRNGR_LZR IS HERE!");
+   }
    if (data.text.match("face down")) {
  
       bot.speak("ass up!");
