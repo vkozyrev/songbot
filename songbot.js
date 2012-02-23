@@ -1,52 +1,41 @@
-var Bot = require('ttapi');
-var http = require('http');
-var AUTH = 'auth+live+ce3553f8c51bb9fa82d0f4015b3df5b3f8c19558';
-var USERID = '4e8f82e8a3f75133bd03b870';
-var ROOMID = '4ded3b7e99968e1d29000047';
-var bot = new Bot(AUTH, USERID, ROOMID);
+var Bot = require('ttapi')
+  , http = require('http')
+  , speak
+  , songbot
+  , initBot
+  ; 
 
-bot.on('speak', function (data) {
-   // Respond to "/hello" command
-   console.log(data.name + ": " + data.text);
-   /*if (data.text.match("WHO DO YOU FAP FOR?")) {
-       
-      bot.speak('I FAP FOR YOU ' + data.name + '!!!');
-   }
-   if (data.text.match("AND I SAY!")) {
-   
-      bot.speak("VAT THA FAHK");
-   }
-   if (data.userid == '4e16773ba3f751697809e7dc'  && data.text.match("sup guys")) {
-
-      bot.speak("ALL HAIL! YOUR KING STRNGR_LZR IS HERE!");
-   }
-   if (data.text.match("face down")) {
- 
-      bot.speak("ass up!");
-   }*/
-   /*if (data.text.match("Strngr_Lzr") || data.text.match("strngr_lzr") || data.text.match("strngr")) {
+speak = function (data) {
   
-      bot.speak("Strngr is getting lunch real fast, please don't boot him");
-   }*/
-   var options = {
-       host: 'songtracker.vladimirkozyrev.com',
-       path: '/catFact/',
-       method: 'GET',
-   };
-   if (data.text.match("catfact")) {
+   console.log(data.name + ": " + data.text);
+   if (data.text.match("/djs") || data.text.match("/catfact")) {
       
-      var req = http.request(options, function(res) {
-	      //console.log('STATUS: ' + res.statusCode);
+      var options = {
+            host: 'songtracker.vladimirkozyrev.com',
+            path: '/catFact/',
+            method: 'GET',
+      };
+      var req = http.request(options, function (res) {
+         
          res.setEncoding('utf8');
-         res.on('data', function (chunk) {   
-		 //console.log('BODY: ' + chunk);
-	    var jsonObject = eval('(' + chunk  +')');
-	    bot.speak(jsonObject.catFact);
-            //console.log(jsonObject.catFact);
+         res.on('data', function (chunck) {
+            
+            var jsonObject = eval('(' + chunck  +')');
+            songbot.speak(jsonObject.catFact);
          });
       });
       req.end();
    }
-});
-var stdin = process.openStdin();
-stdin.on('data', function (chunk) { bot.speak(chunk); });
+};
+
+initBot = function (auth, userid, roomid) {
+   
+   songbot = new Bot(auth, userid, roomid);
+   songbot.on('speak', function (data) {
+      
+      speak(data);
+   });
+   return songbot;
+};
+
+module.exports.initBot = initBot;
